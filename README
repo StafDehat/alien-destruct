@@ -28,7 +28,7 @@ That's it.
 
 Note: The light-fog.sh script, once launched, should run forever.
 We cron it for "@reboot" so it starts automatically as soon as the
-Pi boots.  Alternatively, you could call it directly vi
+Pi boots.  Alternatively, you could call it directly via
 "/etc/rc.local", or create a SysVInit/Upstart/SystemD/etc job to
 launch it for you.  You can do all or none of those - it doesn't
 matter.  The script contains a non-concurrency wrapper, so there
