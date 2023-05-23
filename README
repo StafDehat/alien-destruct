@@ -21,5 +21,19 @@ Add these two lines:
 @reboot    /root/light-fog.sh 2>&1 >/dev/null
 * * * * *  /root/light-fog.sh 2>&1 >/dev/null
 
+Don't forget to save & quit your crontab.
+
 That's it.
 
+
+Note: The light-fog.sh script, once launched, should run forever.
+We cron it for "@reboot" so it starts automatically as soon as the
+Pi boots.  Alternatively, you could call it directly vi
+"/etc/rc.local", or create a SysVInit/Upstart/SystemD/etc job to
+launch it for you.  You can do all or none of those - it doesn't
+matter.  The script contains a non-concurrency wrapper, so there
+will only ever be 1 instance of the script running at a time, no
+matter how many times you try launching it.  That's also why we
+cron it to start every 1 minute - that's just insurance, in case
+the script dies (ie: is killed).
+Long story short, just launch it, somehow, on boot.
