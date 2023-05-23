@@ -1,0 +1,25 @@
+Lots of assumptions here.
+alien-destruct.cpp will run on an Arduino Mega.  Its "piPin" will power up
+  a Raspberry Pi 3 Model B.  That Pi will run light-fog.sh.
+Lots of IoT relays involved, etc.  Mario gets it.  No one else matters.
+
+
+NOTE: The light-fog.sh script *must* run as user root, because it requires
+  root permissions to access /sys/class/gpio/...
+
+Place light-fog.sh somewhere.  Doesn't matter where, but you'll need to know
+  specifically where, for the purposes of calling it via cron later.  For
+  the sake of example, let's say it's /root/light-fog.sh
+
+Ensure light-fog.sh is executable:
+  # chmod +x /root/light-fog.sh
+
+As user 'root', edit your crontab:
+  # crontab -e
+
+Add these two lines:
+@reboot    /root/light-fog.sh 2>&1 >/dev/null
+* * * * *  /root/light-fog.sh 2>&1 >/dev/null
+
+That's it.
+
