@@ -2,14 +2,15 @@
   Author: Andrew Howard
 **/
 
+
 // Runs on Mega
 
 #include <Keypad.h>
 const byte ROWS = 4;
 const byte COLS = 3;
-const byte rowPins[ROWS] = {14, 15, 16, 17};
-const byte colPins[COLS] = {18, 19, 20};
-const char keys[ROWS][COLS] = {
+byte rowPins[ROWS] = {14, 15, 16, 17};
+byte colPins[COLS] = {18, 19, 20};
+char keys[ROWS][COLS] = {
   {'1','2','3'},
   {'4','5','6'},
   {'7','8','9'},
@@ -21,7 +22,7 @@ Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
 #include <nRF24L01.h>
 #include <RF24.h>
 RF24 radio(7, 8); // CE, CSN
-const byte address[6] = "00001";
+const uint8_t address[6] = "00001";
 
 //const char passcode[8] = {'8', '6', '7', '5', '3', '0', '9', '\0'};
 const char* passcode = "8675309";
@@ -45,11 +46,10 @@ void setup() {
   digitalWrite(piPin, LOW);
   digitalWrite(laPin, LOW);
 
-/**
   radio.begin();
   radio.openReadingPipe(0, address);
   radio.setPALevel(RF24_PA_MIN);
-**/
+
   Serial.println("Setup complete");
 }
 
@@ -65,9 +65,6 @@ void waitForArmSignalButton() {
 // Monitor incoming radio signal.
 void waitForArmSignalRadio() {
   Serial.println("In waitForArmSignalRadio()");
-  radio.begin();
-  radio.openReadingPipe(0, address);
-  radio.setPALevel(RF24_PA_MIN);
   radio.startListening();
   while (true) {
     if (! radio.available() ) {
